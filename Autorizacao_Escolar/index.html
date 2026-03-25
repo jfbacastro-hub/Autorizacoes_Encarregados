@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Autorizações Escolares</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="logo">
+                <span>Portal da ESMA</span>
+            </div>
+            <a href="#" id="adminAccessBtn" class="secondary-btn" style="text-decoration: none; padding: 0.5rem 1rem; font-size: 0.85rem; background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; color: var(--text-main); display: flex; align-items: center; gap: 0.4rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Gestão (Professor)
+            </a>
+        </header>
+
+        <main class="main-content">
+            <div class="card glass-effect">
+                <div class="card-header">
+                    <img src="logotipo_ESMA.webp" alt="Logotipo ESMA"
+                        style="height: 75px; margin-bottom: 1.5rem; object-fit: contain;">
+                    <br>
+                    <span class="badge">Atividade Extracurricular</span>
+                    <h1>Autorização de Participação</h1>
+                    <p class="subtitle">Complete o formulário abaixo para autorizar a saída do seu educando e a sua
+                        respetiva participação na atividade.</p>
+                </div>
+
+                <div class="activity-details">
+                    <div class="detail-item">
+                        <div class="icon-wrapper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Professor Responsável</strong>
+                            <span id="display-prof">Link do Professor necessário...</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="icon-wrapper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Nome da Atividade</strong>
+                            <span id="display-atividade">-</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="icon-wrapper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Destino / Local</strong>
+                            <span id="display-local">-</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="icon-wrapper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Início da Atividade</strong>
+                            <span id="display-inicio">-</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="icon-wrapper">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Fim da Atividade</strong>
+                            <span id="display-fim">-</span>
+                        </div>
+                    </div>
+                    <div class="detail-item class-hidden" id="box-notas"
+                        style="align-items: flex-start; background: #e0e7ff; margin-top: 0.5rem; padding: 1rem; border-radius: 12px; border: 1px dashed #c7d2fe;">
+                        <div class="icon-wrapper"
+                            style="background: transparent; box-shadow: none; width: auto; height: auto; margin-right: 0.2rem;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div style="flex:1;">
+                            <strong style="color: var(--primary);">Notas / Informações Úteis</strong>
+                            <span id="display-notas"
+                                style="font-weight: 400; display: block; margin-top: 0.25rem; white-space: pre-wrap;">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="authForm" class="auth-form">
+                    <div class="form-group document-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg> Dados do Aluno</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentName">Nome completo do Aluno</label>
+                        <input type="text" id="studentName" placeholder="Ex: João Pedro Santos" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentClass">Ano e Turma</label>
+                            <input type="text" id="studentClass" placeholder="Ex: 8º A" required>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="form-group document-section">
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg> Encarregado de Educação</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guardianName">Nome do Encarregado de Educação</label>
+                        <input type="text" id="guardianName" placeholder="O seu nome completo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guardianContact">Contacto Móvel</label>
+                        <input type="tel" id="guardianContact" placeholder="Ex: 912 345 678" pattern="[0-9 ]+"
+                            minlength="9" title="Insira o seu contacto telefónico" required>
+                    </div>
+
+                    <div class="terms-card">
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="consent1" required>
+                            <label for="consent1">
+                                Declaro que tomo conhecimento das condições da atividade e <strong>autorizo</strong> a
+                                participação do meu educando(a). Compreendo que a atividade se realizará sob a coordenação do(a) docente <strong
+                                    id="consent-prof">responsável</strong>.
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text">Assinar Digitalmente e Autorizar</span>
+                        <div class="spinner class-hidden"></div>
+                    </button>
+                </form>
+            </div>
+
+            <div class="modal hidden" id="successModal">
+                <div class="modal-content glass-effect">
+                    <h2>Autorização Submetida!</h2>
+                    <p>A participação do seu educando foi registada e autorizada.</p>
+                    <button class="secondary-btn" id="closeModal">Concluir e Voltar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

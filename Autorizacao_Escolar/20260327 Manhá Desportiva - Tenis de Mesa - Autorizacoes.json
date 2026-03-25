@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "activity": {
+    "professor": "Carmen Mirana",
+    "atividade": "Manhá Desportiva - Tenis de Mesa",
+    "local": "Complexo ESMA",
+    "inicio": "2026-03-27T08:31",
+    "fim": "2026-03-27T12:30",
+    "notas": "Alunos devem estar equipados\n9h00 - Começa o torneio que será de eliminatória à 1ª derrota",
+    "locked": true
+  },
+  "submissions": [
+    {
+      "id": 1774436633124,
+      "date": "25/03/2026",
+      "student": "José Alberto de Almeida e Azevedo",
+      "class": "7º A ",
+      "guardian": "Teresa Cristina Santos e Azevedo ",
+      "contact": "999888666",
+      "atividade": "Manhá Desportiva - Tenis de Mesa",
+      "status": "Autorizado"
+    },
+    {
+      "id": 1774436771919,
+      "date": "25/03/2026",
+      "student": "Antonio Costa e Silva",
+      "class": "8ºA",
+      "guardian": "Tozé Costa e Silva",
+      "contact": "912345678",
+      "atividade": "Manhá Desportiva - Tenis de Mesa",
+      "status": "Autorizado"
+    }
+  ]
+}
