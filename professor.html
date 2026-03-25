@@ -32,6 +32,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="telefoneInput">Contacto Móvel do Professor <span style="color:#ef4444">*</span></label>
+                        <input type="tel" id="telefoneInput" placeholder="Ex: 912 345 678" pattern="[0-9 +]+" minlength="9" title="Insira o seu contacto telefónico" required>
+                        <small style="color: #64748b; font-size: 0.8rem;">Os Encarregados de Educação enviarão a confirmação para este número via WhatsApp.</small>
+                    </div>
+
+                    <div class="form-group">
                         <label for="atividadeInput">Nome da Atividade <span style="color:#ef4444">*</span></label>
                         <input type="text" id="atividadeInput" placeholder="Ex: Visita de Estudo ao Oceanário" required>
                     </div>
@@ -145,6 +151,7 @@
         function getFormData() {
             return {
                 professor: document.getElementById('professorInput')?.value || '',
+                telefone: document.getElementById('telefoneInput')?.value || '',
                 atividade: document.getElementById('atividadeInput')?.value || '',
                 local: document.getElementById('localInput')?.value || '',
                 inicio: document.getElementById('dataInicioInput')?.value || '',
@@ -167,6 +174,7 @@
             const url = new URL(baseUrl);
             url.searchParams.set('atividade', data.atividade.trim());
             if(data.professor.trim()) url.searchParams.set('professor', data.professor.trim());
+            if(data.telefone && data.telefone.trim()) url.searchParams.set('telefone', data.telefone.trim());
             if(data.local.trim()) url.searchParams.set('local', data.local.trim());
             if(data.inicio) url.searchParams.set('inicio', data.inicio);
             if(data.fim) url.searchParams.set('fim', data.fim);
@@ -175,7 +183,7 @@
         }
 
         function setLockState(locked, urlString = '', activityData = null) {
-            ['professorInput', 'atividadeInput', 'localInput', 'dataInicioInput', 'dataFimInput', 'notasInput'].forEach(id => {
+            ['professorInput', 'telefoneInput', 'atividadeInput', 'localInput', 'dataInicioInput', 'dataFimInput', 'notasInput'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) {
                     el.disabled = locked;
@@ -393,6 +401,7 @@
                 try {
                     const data = JSON.parse(saved);
                     if(document.getElementById('professorInput')) document.getElementById('professorInput').value = data.professor || '';
+                    if(document.getElementById('telefoneInput')) document.getElementById('telefoneInput').value = data.telefone || '';
                     if(document.getElementById('atividadeInput')) document.getElementById('atividadeInput').value = data.atividade || '';
                     if(document.getElementById('localInput')) document.getElementById('localInput').value = data.local || '';
                     if(document.getElementById('dataInicioInput')) document.getElementById('dataInicioInput').value = data.inicio || '';
