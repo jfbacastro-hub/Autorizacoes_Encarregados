@@ -174,7 +174,7 @@
             return url.toString();
         }
 
-        function setLockState(locked, urlString = '') {
+        function setLockState(locked, urlString = '', activityData = null) {
             ['professorInput', 'atividadeInput', 'localInput', 'dataInicioInput', 'dataFimInput', 'notasInput'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) {
@@ -198,7 +198,18 @@
                 document.getElementById('finalUrl').value = urlString;
                 document.getElementById('linkResult').classList.remove('class-hidden');
                 
-                const text = `Olá! Clique neste link para assinar a autorização da nossa próxima atividade escolar: ${urlString}`;
+                let descAtividade = "nossa próxima atividade escolar";
+                if (activityData) {
+                    const nome = activityData.atividade || "";
+                    let infoData = "";
+                    if (activityData.inicio) {
+                        const d = activityData.inicio.split('T')[0].split('-').reverse().join('/');
+                        infoData = ` no dia ${d}`;
+                    }
+                    if (nome) descAtividade = `atividade "${nome}"${infoData}`;
+                }
+
+                const text = `Olá! Clique neste link para assinar a autorização da ${descAtividade}: ${urlString}`;
                 document.getElementById('whatsappBtn').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
                 document.getElementById('smsBtn').href = `sms:?body=${encodeURIComponent(text)}`;
             } else {
@@ -216,7 +227,7 @@
                 return;
             }
             saveActivityState(true);
-            setLockState(true, buildLink(data));
+            setLockState(true, buildLink(data), data);
         });
 
         document.getElementById('editDataBtn').addEventListener('click', () => {
@@ -317,7 +328,7 @@
                     localStorage.setItem('eduAuthCurrentActivity', JSON.stringify(data));
                     localStorage.setItem('eduAuthSubmissions', JSON.stringify(bundle.submissions));
 
-                    setLockState(true, buildLink(data));
+                    setLockState(true, buildLink(data), data);
                     loadSubmissions();
 
                     alert(`✅ Atividade "${data.atividade}" recuperada com sucesso! ${bundle.submissions.length} autorização(s) carregada(s).`);
@@ -344,7 +355,7 @@
                     if(document.getElementById('notasInput')) document.getElementById('notasInput').value = data.notas || '';
 
                     if (data.locked) {
-                        setLockState(true, buildLink(data));
+                        setLockState(true, buildLink(data), data);
                     }
                 } catch(e) { console.error("Error loading activity state", e); }
             }
