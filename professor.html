@@ -343,6 +343,51 @@
 
         // Initialize from local storage or set defaults on boot
         document.addEventListener('DOMContentLoaded', () => {
+
+            // === RECEÇÃO DE AUTORIZAÇÃO VIA LINK (WhatsApp) ===
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('acao') === 'adicionar') {
+                const aluno = urlParams.get('aluno');
+                const turma = urlParams.get('turma');
+                const ee = urlParams.get('ee');
+                const contacto = urlParams.get('contacto');
+                const dataAuth = urlParams.get('data');
+                const atividade = urlParams.get('atividade');
+
+                if (aluno && ee) {
+                    const newSubmission = {
+                        id: Date.now(),
+                        date: dataAuth || new Date().toLocaleDateString('pt-PT'),
+                        student: aluno,
+                        class: turma || '',
+                        guardian: ee,
+                        contact: contacto || '',
+                        atividade: atividade || '',
+                        status: 'Autorizado'
+                    };
+
+                    // Verificar duplicados (mesmo aluno + mesma atividade)
+                    let submissions = JSON.parse(localStorage.getItem('eduAuthSubmissions')) || [];
+                    const duplicado = submissions.some(s => 
+                        s.student === newSubmission.student && 
+                        s.atividade === newSubmission.atividade &&
+                        s.guardian === newSubmission.guardian
+                    );
+
+                    if (duplicado) {
+                        alert(`⚠️ A autorização de "${aluno}" para esta atividade já foi registada anteriormente.`);
+                    } else {
+                        submissions.push(newSubmission);
+                        localStorage.setItem('eduAuthSubmissions', JSON.stringify(submissions));
+                        alert(`✅ Autorização registada com sucesso!\n\n👤 Aluno: ${aluno} (${turma})\n👨‍👩‍👧 EE: ${ee}\n📞 Contacto: ${contacto}`);
+                    }
+
+                    // Limpar parâmetros do URL sem recarregar
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
+
+            // === CARREGAR ESTADO GUARDADO ===
             const saved = localStorage.getItem('eduAuthCurrentActivity');
             if (saved) {
                 try {
@@ -359,6 +404,9 @@
                     }
                 } catch(e) { console.error("Error loading activity state", e); }
             }
+
+            // Carregar tabela de submissões
+            loadSubmissions();
         });
 
         document.getElementById('copyBtn').addEventListener('click', () => {

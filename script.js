@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnText.textContent = 'Assinar Digitalmente e Autorizar';
             spinner.classList.add('class-hidden');
 
-            // Gravar Submissão (Storage Local)
+            // Recolher dados da submissão
             const studentName = document.getElementById('studentName').value;
             const studentClass = document.getElementById('studentClass').value;
             const guardianName = document.getElementById('guardianName').value;
@@ -85,9 +85,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 status: 'Autorizado'
             };
 
+            // Guardar localmente (útil se professor e pai usarem o mesmo browser/dispositivo)
             let submissions = JSON.parse(localStorage.getItem('eduAuthSubmissions')) || [];
             submissions.push(newSubmission);
             localStorage.setItem('eduAuthSubmissions', JSON.stringify(submissions));
+
+            // === Gerar link de retorno para o professor ===
+            let baseArr = window.location.href.split('?')[0].split('#')[0].split('/');
+            baseArr[baseArr.length - 1] = 'professor.html';
+            const profUrl = new URL(baseArr.join('/'));
+            profUrl.searchParams.set('acao', 'adicionar');
+            profUrl.searchParams.set('aluno', studentName);
+            profUrl.searchParams.set('turma', studentClass);
+            profUrl.searchParams.set('ee', guardianName);
+            profUrl.searchParams.set('contacto', guardianContact);
+            profUrl.searchParams.set('data', newSubmission.date);
+            profUrl.searchParams.set('atividade', atividadeNome);
+
+            const returnLink = profUrl.toString();
+            const whatsappMsg = `✅ Autorização assinada!\n\n👤 Aluno: ${studentName} (${studentClass})\n👨‍👩‍👧 EE: ${guardianName}\n📋 Atividade: ${atividadeNome}\n\nClique no link abaixo para registar esta autorização:\n${returnLink}`;
+
+            // Configurar botão WhatsApp no modal
+            const sendBtn = document.getElementById('sendToTeacherBtn');
+            if (sendBtn) {
+                sendBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(whatsappMsg)}`;
+                sendBtn.style.display = 'flex';
+            }
 
             // Mostrar Modal de Sucesso
             modal.classList.remove('hidden');
